@@ -36,7 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
       let sceneCoordinator = SceneCoordinator(window: window!)
       let weatherAPi = OpenWeatherMapApi()
-      let locationProvider = StaticLocationProvider()
+      let locationProvider = CoreLocationProvider()
     
     //의존성 주입
     

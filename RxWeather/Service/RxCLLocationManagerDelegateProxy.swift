@@ -73,15 +73,23 @@ extension Reactive where Base : CLLocationManager {
         
         if #available(iOS 14.0, *) {
             sel = #selector(CLLocationManagerDelegate.locationManagerDidChangeAuthorization(_:))
+            
+            return delegate.methodInvoked(sel)
+                .map {
+                    parameters in
+                    return (parameters[0] as! CLLocationManager).authorizationStatus
+                }
         } else {
             sel = #selector(CLLocationManagerDelegate.locationManager(_:didChangeAuthorization:))
+            
+            return delegate.methodInvoked(sel)
+                .map {
+                    parameters in
+                    return CLAuthorizationStatus(rawValue: parameters[1] as! Int32) ?? .notDetermined
+                }
         }
         
-        return delegate.methodInvoked(sel)
-            .map {
-                parameters in
-                return CLAuthorizationStatus(rawValue: parameters[1] as! Int32) ?? .notDetermined
-            }
+
     }
     
     

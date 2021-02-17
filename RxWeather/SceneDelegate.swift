@@ -33,6 +33,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
       guard let _ = (scene as? UIWindowScene) else { return }
       
+    
+      let sceneCoordinator = SceneCoordinator(window: window!)
+      let weatherAPi = OpenWeatherMapApi()
+      let locationProvider = StaticLocationProvider()
+    
+    //의존성 주입
+    
+      let viewModel = MainViewModel(title: "", sceneCoordinator: sceneCoordinator, weatherAPi: weatherAPi, locationProvider: locationProvider)
+    
+    let scene = Scene.main(viewModel)
+    sceneCoordinator.transition(to: scene, using: .root, animated: true)
+    
       
    }
    

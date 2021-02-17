@@ -34,6 +34,14 @@ class ViewController: UIViewController, ViewModelBindableType {
    @IBOutlet weak var listTableView: UITableView!
    
    func bindViewModel() {
+    
+    viewModel.title
+        .bind(to: locationLabel.rx.text)
+        .disposed(by: rx.disposeBag)
+    
+    viewModel.weartherData
+        .drive(listTableView.rx.items(dataSource: viewModel.dataSource))
+        .disposed(by: rx.disposeBag)
       
    }
    
